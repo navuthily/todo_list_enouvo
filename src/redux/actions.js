@@ -1,27 +1,33 @@
-import { GET_ARTICLES, ADD_ARTICLE , DELETE_ARTICLE, UPDATE_ARTICLE} from "./constants";
+import {
+  GET_EMPLOYMENTS,
+  ADD_EMPLOYMENT,
+  DELETE_EMPLOYMENT,
+  UPDATE_EMPLOYMENT,
+} from "./constants";
 
-export function getArticlesAction() {
-  return { type: GET_ARTICLES };
+export function getemploymentsAction() {
+  return { type: GET_EMPLOYMENTS };
 }
 
-export function addArticleAction(data) {
+export function addemploymentAction(data) {
   return {
-    type: ADD_ARTICLE,
-    payload: data
+    type: ADD_EMPLOYMENT,
+    payload: data,
   };
 }
 
-export function deleteArticleAction(data) {
+export function deleteemploymentAction(data, key) {
+  console.log(data, key)
   return {
-    type: DELETE_ARTICLE,
-    payload:data
-  };
-}
-export function updateArticleAction(data,key) {
-  return {
-    type: UPDATE_ARTICLE,
-    payload:data,
+    type: DELETE_EMPLOYMENT,
+    payload: data,
     key:key
   };
 }
-
+export function updateemploymentAction(data, key) {
+  return {
+    type: UPDATE_EMPLOYMENT,
+    payload: data,
+    key: key,
+  };
+}

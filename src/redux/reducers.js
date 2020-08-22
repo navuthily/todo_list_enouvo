@@ -1,38 +1,43 @@
-import { GET_ARTICLES, ADD_ARTICLE , DELETE_ARTICLE,UPDATE_ARTICLE} from "./constants";
+import {
+  GET_EMPLOYMENTS,
+  ADD_EMPLOYMENT,
+  DELETE_EMPLOYMENT,
+  UPDATE_EMPLOYMENT,
+} from "./constants";
 
 const initialState = {
-  articles: []
+  employments:  [
+    { title: "Hello world", id: 0 },
+    { title: "React Redux Tutorial for Beginners", id: 1 },
+    { title: "TypeScript tutorial for beginners", id: 2 },
+  ],
 };
-function rootReducer(state = initialState, action) {// chộ biến initialStore là mặc định rồi
+function rootReducer(state = initialState, action) {
+  // chộ biến initialStore là mặc định rồi
   switch (action.type) {
-    case ADD_ARTICLE:
+    case ADD_EMPLOYMENT:
       return {
         ...state,
-        articles: [...state.articles, action.payload]
+        employments: [...state.employments, action.payload],
       };
-    case GET_ARTICLES:
+    case GET_EMPLOYMENTS:
       return {
-        ...state,
-        articles: [
-          { title: "Hello world", id: 0 },
-          { title: "React Redux Tutorial for Beginners", id: 1 },
-          { title: "TypeScript tutorial for beginners", id: 2 }
-        ]
+        ...state
       };
-      case DELETE_ARTICLE:     
+    case DELETE_EMPLOYMENT:
       return {
         ...state,
-        articles: state.articles.filter(article => article.id !== action.payload.id)
-      }    
-      case UPDATE_ARTICLE:
-      let temp = state.articles;
-      temp[action.key].title=action.payload.title;
+        employments: state.employments.filter(
+          (employment) => employment.id !== action.payload.id// cái này làm theo cách id chứ ko phải index nhỉ
+        ),
+      };
+    case UPDATE_EMPLOYMENT:
+      let temp = state.employments;
+      temp[action.key].title = action.payload.title;
       console.log(temp);
-      return {...state, articles:temp}  
+      return { ...state, employments: temp };
     default:
       return state;
   }
 }
 export default rootReducer;
-
-

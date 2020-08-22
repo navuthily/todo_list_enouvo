@@ -1,63 +1,78 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
-  getArticlesAction,
-  addArticleAction,
-  deleteArticleAction,
-  updateArticleAction
+  getemploymentsAction,
+  addemploymentAction,
+  deleteemploymentAction,
+  updateemploymentAction,
 } from "./redux/actions";
-const App = ({ getArticles, articles, addArticle, delArticle,editArticle }) => {
+const App = ({
+  getemployments,
+  employments,
+  addemployment,
+  delemployment,
+  editemployment,
+}) => {
   const [input, setInput] = useState("");
-  const [article, setArticle] = useState({});
+  const [employment, setemployment] = useState({});
 
-  const [editArticles, setEditArticles] = useState({isEdit: false,key:0});
-  
-  
+  const [editemployments, setEditemployments] = useState({
+    isEdit: false,
+    key: 0,
+  });
+
   useEffect(() => {
-    getArticles();
+    getemployments();
     // eslint-disable-next-line
   }, []);
   const handleClick = () => {
     if (input !== "") {
-      addArticle({
-        id: 4,
-        title: input
+      addemployment({
+        id: Math.random(),
+        title: input,
       });
       setInput("");
     }
   };
-  const editHandle =(article,key)=>{
-    setEditArticles({isEdit:true,key: key});
-    setArticle(article)
-    setInput(article.title);
-
-  }
-const editArticleHandle =()=>{
-let temp = article;
-temp.title = input; 
-  setArticle(temp)
-  editArticle(article,editArticles.key);
-  setEditArticles({isEdit:false});
-  setInput('')
-}
-  const handleInput = e => {
+  const editHandle = (employment, key) => {
+    setEditemployments({ isEdit: true, key: key });
+    setemployment(employment);
+    setInput(employment.title);
+  };
+  const editemploymentHandle = () => {
+    let temp = employment;
+    temp.title = input;
+    setemployment(temp);
+    editemployment(employment, editemployments.key);
+    setEditemployments({ isEdit: false });
+    setInput("");
+  };
+  const handleInput = (e) => {
     setInput(e.target.value);
   };
   return (
     <div className="App">
       <div className="content">
         <div className="title">
-          <input placeholder="article" value={input} onChange={handleInput} />
-          {editArticles.isEdit?<button onClick={editArticleHandle }>edit article</button>
-          :<button onClick={handleClick}>add article</button>}
+          <input
+            placeholder="employment"
+            value={input}
+            onChange={handleInput}
+          />
+          {editemployments.isEdit ? (
+            <button onClick={editemploymentHandle}>edit employment</button>
+          ) : (
+            <button onClick={handleClick}>add employment</button>
+          )}
         </div>
         <ul>
-          {articles.map((article,key) => (
+          {employments.map((employment, key, index) => (
             <li key={key}>
-              <span>{article.title}</span>
-              <button onClick={data => delArticle(article)}> Del</button>
-              <button onClick={()=> editHandle(article,key)}> Edit</button>
-              
+              <span>{employment.title}</span>
+              <button onClick={(data) => delemployment(employment, key)}>
+                Del
+              </button>
+              <button onClick={() => editHandle(employment, key)}> Edit</button>
             </li>
           ))}
         </ul>
@@ -66,18 +81,15 @@ temp.title = input;
   );
 };
 
-const mapStateToProps = state => ({
-  articles: state.articles
+const mapStateToProps = (state) => ({
+  employments: state.employments,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getArticles: () => dispatch(getArticlesAction()),
-  addArticle: data => dispatch(addArticleAction(data)),
-  delArticle: data => dispatch(deleteArticleAction(data)),
-  editArticle: (data,key) => dispatch(updateArticleAction(data,key))
+const mapDispatchToProps = (dispatch) => ({
+  getemployments: () => dispatch(getemploymentsAction()),
+  addemployment: (data) => dispatch(addemploymentAction(data)),
+  delemployment: (data, key) => dispatch(deleteemploymentAction(data, key)),
+  editemployment: (data, key) => dispatch(updateemploymentAction(data, key)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
